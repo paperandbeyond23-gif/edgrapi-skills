@@ -1,0 +1,26 @@
+{
+  "name": "edgrapi-skills",
+  "version": "1.0.0",
+  "description": "Agent skills for clean company financials from SEC EDGAR via Edgrapi.com",
+  "author": "Edgrapi",
+  "homepage": "https://edgrapi.com",
+  "repository": "https://github.com/paperandbeyond23-gif/edgrapi-skills",
+  "license": "MIT-0",
+  "skills": [
+    {
+      "name": "edgrapi-full",
+      "path": "skills/edgrapi-full",
+      "description": "Complete SEC EDGAR financials toolkit — normalized income/balance/cash-flow fundamentals, computed ratios, company profiles, and recent filings for any US-listed ticker."
+    },
+    {
+      "name": "edgrapi-fundamentals",
+      "path": "skills/edgrapi-fundamentals",
+      "description": "Normalized financial statements and computed ratios (margins, returns, leverage, liquidity) for a ticker, parsed from SEC EDGAR XBRL."
+    },
+    {
+      "name": "edgrapi-filings",
+      "path": "skills/edgrapi-filings",
+      "description": "Company profiles (CIK, industry, fiscal-year end, exchange) and recent SEC filings (10-K/10-Q/8-K) with document links."
+    }
+  ]
+}

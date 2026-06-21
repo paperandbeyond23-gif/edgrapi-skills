@@ -1,0 +1,32 @@
+{
+  "name": "edgrapi-skills",
+  "version": "1.0.0",
+  "description": "Agent skills for clean company financials from SEC EDGAR via Edgrapi.com",
+  "homepage": "https://github.com/paperandbeyond23-gif/edgrapi-skills",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/paperandbeyond23-gif/edgrapi-skills.git"
+  },
+  "bugs": {
+    "url": "https://github.com/paperandbeyond23-gif/edgrapi-skills/issues"
+  },
+  "author": "Edgrapi",
+  "license": "MIT-0",
+  "keywords": [
+    "edgrapi",
+    "sec-edgar",
+    "edgar",
+    "financial-data",
+    "fundamentals",
+    "financial-statements",
+    "xbrl",
+    "ratios",
+    "filings",
+    "10-k",
+    "equity-research",
+    "agent-skills",
+    "mcp",
+    "llm",
+    "stocks"
+  ]
+}
