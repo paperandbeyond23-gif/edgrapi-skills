@@ -4,7 +4,7 @@
 
 EDGAR is free, but its XBRL company-facts payloads are brutal to parse (tag drift, mixed periods, trailing-twelve-month windows hiding inside 10-Qs). Edgrapi normalizes all of that into clean JSON, keyed by fiscal period — so your agent gets numbers it can trust in one call.
 
-Free to start — [grab a key](https://edgrapi.com/app) (100 requests/day, no card required) and you're pulling fundamentals from Claude, ChatGPT, Cursor, or your own agent loop in under two minutes.
+Free to start — [grab a key](https://edgrapi.com/app) (100 free credits, no card required) and you're pulling fundamentals from Claude, ChatGPT, Cursor, or your own agent loop in under two minutes.
 
 Pure Python standard library. No dependencies. MIT-0 licensed.
 
@@ -46,18 +46,19 @@ Set the `EDGRAPI_KEY` environment variable to your Edgrapi key (format `edgr_...
 export EDGRAPI_KEY="edgr_..."
 ```
 
-**[Get a free key](https://edgrapi.com/app)** — 100 requests/day, no card required. The same key works for these skills and direct REST calls.
+**[Get a free key](https://edgrapi.com/app)** — 100 free credits, no card required. The same key works for these skills and direct REST calls.
 
 ## Pricing
 
-Subscription tiers, billed by monthly request volume. All data is from public SEC EDGAR.
+1 credit = 1 request. Credits never expire. All data is from public SEC EDGAR.
 
-| Plan | Price | Requests |
+| Plan | Price | Credits |
 |---|---|---|
-| Free | $0 | 100 / day |
-| Starter | $9/mo | 50,000 / mo |
-| Pro | $29/mo | 250,000 / mo |
-| Business | $99/mo | 1,000,000 / mo |
+| Free | $0 | 100 one-time |
+| Pro (monthly) | $29/mo | 60,000 / mo |
+| Pro (annual) | $290/yr | 720,000 up front |
+
+Top-up packs (one-time, never expire): 10,000 / $9 · 30,000 / $24 · 100,000 / $69.
 
 Manage plans at <https://edgrapi.com/pricing>. Also available metered on RapidAPI.
 

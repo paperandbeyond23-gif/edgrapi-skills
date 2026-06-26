@@ -32,7 +32,7 @@ Use when the user **explicitly asks** for a US-listed company's financials: reve
 
 ## When to use this skill
 
-Each call consumes an Edgrapi request against the account's plan quota. Activate only for a genuine financials request about a specific company — not when a ticker appears in passing, and not for live stock **prices** (Edgrapi is filings-derived fundamentals, not a price feed).
+Each call spends one Edgrapi credit (1 credit = 1 request). Activate only for a genuine financials request about a specific company — not when a ticker appears in passing, and not for live stock **prices** (Edgrapi is filings-derived fundamentals, not a price feed).
 
 ## Tools
 
@@ -50,15 +50,15 @@ Set `EDGRAPI_KEY` to your Edgrapi key (`edgr_...`), sent as the `X-API-Key` head
 export EDGRAPI_KEY="edgr_..."
 ```
 
-Free key (100 requests/day, no card) at <https://edgrapi.com/app>.
+Free key (100 free credits, no card) at <https://edgrapi.com/app>.
 
 ## Pricing
 
-Free 100/day · Starter $9/mo (50k) · Pro $29/mo (250k) · Business $99/mo (1M). See <https://edgrapi.com/pricing>.
+Free 100 one-time · Pro $29/mo (60k credits) or $290/yr (720k) · top-up packs from $9. 1 credit = 1 call. See <https://edgrapi.com/pricing>.
 
 ## Errors
 
-Functions return a dict; on failure it has an `error` key: `auth_required`, `auth_invalid`, `ticker_not_found`, `rate_limit_exceeded`, `rapidapi_only`, `edgar_unavailable`, `network`, `HTTP <code>`, `unexpected`.
+Functions return a dict; on failure it has an `error` key: `auth_required`, `auth_invalid`, `ticker_not_found`, `out_of_credits`, `rapidapi_only`, `edgar_unavailable`, `network`, `HTTP <code>`, `unexpected`.
 
 ## Independence
 

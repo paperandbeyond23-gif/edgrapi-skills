@@ -34,7 +34,7 @@ EDGAR is free but its XBRL company-facts payloads are brutal to parse (tag drift
 
 ## When to use this skill
 
-Each tool call consumes an Edgrapi request against the account's plan quota, so this skill activates only when the request is genuinely about a company's financials — not when a ticker merely appears in passing.
+Each tool call spends one Edgrapi credit (1 credit = 1 request), so this skill activates only when the request is genuinely about a company's financials — not when a ticker merely appears in passing.
 
 **DO use when the user:**
 
@@ -73,18 +73,19 @@ Set `EDGRAPI_KEY` to your Edgrapi key. Keys are `edgr_...` strings, sent as the 
 export EDGRAPI_KEY="edgr_..."
 ```
 
-Get a free key (100 requests/day, no card required) at <https://edgrapi.com/app>.
+Get a free key (100 free credits, no card required) at <https://edgrapi.com/app>.
 
 ## Pricing
 
-Subscription tiers — pick by monthly request volume. All data is from public SEC EDGAR.
+1 credit = 1 request. Credits never expire. All data is from public SEC EDGAR.
 
-| Plan | Price | Requests |
+| Plan | Price | Credits |
 |---|---|---|
-| Free | $0 | 100 / day |
-| Starter | $9/mo | 50,000 / mo |
-| Pro | $29/mo | 250,000 / mo |
-| Business | $99/mo | 1,000,000 / mo |
+| Free | $0 | 100 one-time |
+| Pro (monthly) | $29/mo | 60,000 / mo |
+| Pro (annual) | $290/yr | 720,000 up front |
+
+Top-up packs (one-time, never expire): 10,000 / $9 · 30,000 / $24 · 100,000 / $69.
 
 Manage plans at <https://edgrapi.com/pricing>. Also available metered on RapidAPI.
 
@@ -95,7 +96,7 @@ All functions return a Python dict. On success it's the API response; on failure
 - `{"error": "auth_required", ...}` — `EDGRAPI_KEY` not set (includes `signup_url`)
 - `{"error": "auth_invalid", ...}` — key rejected; mint a new one at `/app`
 - `{"error": "ticker_not_found", ...}` — no SEC filer matches that ticker
-- `{"error": "rate_limit_exceeded", ...}` — plan limit hit; includes `upgrade_url`
+- `{"error": "out_of_credits", ...}` — credit balance exhausted; includes `upgrade_url` to top up or subscribe
 - `{"error": "rapidapi_only", ...}` — origin locked to RapidAPI subscribers
 - `{"error": "edgar_unavailable", ...}` — SEC EDGAR was unreachable upstream; retry
 - `{"error": "network" | "HTTP <code>" | "unexpected", ...}` — transport / other failures

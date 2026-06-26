@@ -27,7 +27,7 @@ def _key():
     if not k:
         raise RuntimeError(
             "EDGRAPI_KEY environment variable is not set. "
-            "Get a free key (100 requests/day, no card) at " + SIGNUP_URL + ", "
+            "Get a free key (100 free credits, no card) at " + SIGNUP_URL + ", "
             "then export EDGRAPI_KEY=edgr_..."
         )
     return k
@@ -59,6 +59,13 @@ def _http_error(e):
             "error": "ticker_not_found",
             "detail": "No SEC filer matches that ticker. Use the exact listed symbol (e.g. AAPL, BRK-B).",
             "http_status": 404,
+        }
+    if e.code == 402:
+        return {
+            "error": "out_of_credits",
+            "detail": "Out of Edgrapi credits. Top up a pack or subscribe at " + PRICING_URL + ".",
+            "upgrade_url": PRICING_URL,
+            "http_status": 402,
         }
     if e.code == 429:
         return {
