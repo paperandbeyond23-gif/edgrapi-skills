@@ -54,7 +54,7 @@ Free key (100 free credits, no card) at <https://edgrapi.com/app>.
 
 ## Pricing
 
-Free 100 one-time · Pro $29/mo (60k credits) or $290/yr (720k) · top-up packs from $9. 1 credit = 1 call. See <https://edgrapi.com/pricing>.
+Free 100 one-time · Pro $29/mo (60k credits) or $290/yr (720k) · top-up packs from $7. 1 credit = 1 call. See <https://edgrapi.com/pricing>.
 
 ## Errors
 

@@ -85,7 +85,7 @@ Get a free key (100 free credits, no card required) at <https://edgrapi.com/app>
 | Pro (monthly) | $29/mo | 60,000 / mo |
 | Pro (annual) | $290/yr | 720,000 up front |
 
-Top-up packs (one-time, never expire): 10,000 / $9 · 30,000 / $24 · 100,000 / $69.
+Top-up packs (one-time, never expire): 10,000 / $7 · 30,000 / $18 · 100,000 / $55.
 
 Manage plans at <https://edgrapi.com/pricing>. Also available metered on RapidAPI.
 
