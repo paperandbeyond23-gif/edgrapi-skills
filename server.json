@@ -1,0 +1,17 @@
+{
+  "$schema": "https://static.modelcontextprotocol.io/schemas/2025-12-11/server.schema.json",
+  "name": "io.github.paperandbeyond23-gif/edgrapi-skills",
+  "description": "Clean SEC EDGAR company financials, ratios, filings and 10-K/10-Q sections as normalized JSON.",
+  "repository": {
+    "url": "https://github.com/paperandbeyond23-gif/edgrapi-skills",
+    "source": "github"
+  },
+  "version": "1.0.0",
+  "websiteUrl": "https://edgrapi.com",
+  "remotes": [
+    {
+      "type": "streamable-http",
+      "url": "https://api.edgrapi.com/mcp"
+    }
+  ]
+}
