@@ -37,14 +37,16 @@ https://www.sec.gov/Archives/edgar/data/...
 | `min_value` | 50000 | Minimum combined USD across the cluster |
 | `limit` | 20 | Max clusters returned |
 
-Dropping `min_insiders` to 2 roughly triples the volume. Widening `days` past about 45 starts
-pulling in trades that are no longer news.
+Dropping `min_insiders` to 2 gives you a lot more hits, most of which won't mean much, since two
+people buying in the same window happens for ordinary reasons. Widening `days` too far runs into the
+fact that a 13F-style lag isn't the issue here, Form 4s land within two business days, so a long
+window mostly just re-surfaces trades you already saw.
 
 ## Worth knowing
 
-Only **open-market purchases** count here, transaction code P. That distinction is the whole point:
-option exercises and vesting show up on Form 4 as acquisitions too, but an insider receiving shares
-as compensation tells you nothing, whereas one spending their own money is a decision. Sales are
+Only open-market purchases count here, transaction code P, and that distinction is doing most of the
+work. Option exercises and vesting show up on Form 4 as acquisitions too, but an insider receiving
+shares as compensation tells you nothing, whereas one spending their own money is a decision. Sales are
 excluded for the same reason, and most are pre-scheduled 10b5-1 anyway.
 
 The endpoint costs 5 credits per call. On the free tier that's 20 calls a month, so once a day needs
