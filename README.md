@@ -4,7 +4,7 @@
 
 EDGAR is free, but its XBRL company-facts payloads are brutal to parse (tag drift, mixed periods, trailing-twelve-month windows hiding inside 10-Qs). Edgrapi normalizes all of that into clean JSON, keyed by fiscal period — so your agent gets numbers it can trust in one call.
 
-Free to start — [grab a key](https://edgrapi.com/app) (100 free credits, no card required) and you're pulling fundamentals from Claude, ChatGPT, Cursor, or your own agent loop in under two minutes.
+Free to start — [grab a key](https://edgrapi.com/app) (100 free credits every month, no card required) and you're pulling fundamentals from Claude, ChatGPT, Cursor, or your own agent loop in under two minutes.
 
 Pure Python standard library. No dependencies. MIT-0 licensed.
 
@@ -18,6 +18,34 @@ npx skills add paperandbeyond23-gif/edgrapi-skills --all
 # OpenClaw / ClawHub — published to the ClawHub registry
 npx clawhub@latest install edgrapi-full   # also: edgrapi-fundamentals, edgrapi-filings
 ```
+
+## Use it as an MCP server
+
+The skills above are one way in. The other is the hosted MCP server — point any MCP client at a
+single URL, with nothing to install and no local process:
+
+```json
+{
+  "mcpServers": {
+    "edgrapi": {
+      "url": "https://api.edgrapi.com/mcp",
+      "headers": { "Authorization": "Bearer edgr_YOUR_KEY" }
+    }
+  }
+}
+```
+
+Works in Claude Desktop, Claude Code, Cursor and Cline. Transport is streamable-http. Auth is
+`Authorization: Bearer edgr_...`, or OAuth 2.1 — the server is its own provider. Discovery
+(`initialize`, `tools/list`) is open, so you can inspect the tool list without a key; `tools/call`
+needs one.
+
+The MCP surface is wider than the skills in this repo: alongside fundamentals and filings it covers
+Form 4 insider trades with cluster-buy detection, typed 8-K material events, 13F fund holdings
+diffed quarter-over-quarter, 13D/13G >5% activist stakes, XBRL-to-JSON, shares outstanding, entity
+resolution, and full-text search across every filing since 2001. For the live list, call
+`tools/list` or read the [server card](https://api.edgrapi.com/.well-known/mcp/server-card.json) —
+both are generated from the server itself, so neither goes stale.
 
 ## Skills in this repo
 
@@ -46,17 +74,20 @@ Set the `EDGRAPI_KEY` environment variable to your Edgrapi key (format `edgr_...
 export EDGRAPI_KEY="edgr_..."
 ```
 
-**[Get a free key](https://edgrapi.com/app)** — 100 free credits, no card required. The same key works for these skills and direct REST calls.
+**[Get a free key](https://edgrapi.com/app)** — 100 free credits every month, no card required. The same key works for these skills and direct REST calls.
 
 ## Pricing
 
-1 credit = 1 request. Credits never expire. All data is from public SEC EDGAR.
+Credits are weighted by endpoint, not one per request: company, filings, events, entity resolution
+and full-text search cost 1; fundamentals, ratios and XBRL cost 3; sections, insider, holdings and
+activist cost 5. Credits never expire. All data is from public SEC EDGAR.
 
 | Plan | Price | Credits |
 |---|---|---|
-| Free | $0 | 100 one-time |
-| Pro (monthly) | $29/mo | 60,000 / mo |
-| Pro (annual) | $290/yr | 720,000 up front |
+| Free | $0 | 100 / month |
+| Starter | $10/mo | 10,000 / month |
+| Pro (monthly) | $29/mo | 30,000 / month |
+| Pro (annual) | $290/yr | 360,000 up front |
 
 Top-up packs (one-time, never expire): 10,000 / $7 · 30,000 / $18 · 100,000 / $55.
 
