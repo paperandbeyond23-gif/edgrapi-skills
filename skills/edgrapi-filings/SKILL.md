@@ -32,7 +32,7 @@ Use when the user **explicitly asks** who/what a filer is (CIK, industry, fiscal
 
 ## When to use this skill
 
-Each call spends one Edgrapi credit (1 credit = 1 request). Activate only for a genuine lookup about a specific company — not when a ticker appears in passing.
+Credits are weighted by endpoint (1 to 5 per call). Activate only for a genuine lookup about a specific company — not when a ticker appears in passing.
 
 ## Tools
 
@@ -50,11 +50,11 @@ Set `EDGRAPI_KEY` to your Edgrapi key (`edgr_...`), sent as the `X-API-Key` head
 export EDGRAPI_KEY="edgr_..."
 ```
 
-Free key (100 free credits, no card) at <https://edgrapi.com/app>.
+Free key (100 credits every month, no card) at <https://edgrapi.com/app>.
 
 ## Pricing
 
-Free 100 one-time · Pro $29/mo (60k credits) or $290/yr (720k) · top-up packs from $7. 1 credit = 1 call. See <https://edgrapi.com/pricing>.
+Free 100 credits every month · Starter $10/mo (10k) · Pro $29/mo (30k) or $290/yr (360k) · top-up packs from $7. Credits are weighted 1–5 per call by endpoint. See <https://edgrapi.com/pricing>.
 
 ## Errors
 

@@ -89,7 +89,7 @@ activist cost 5. Credits never expire. All data is from public SEC EDGAR.
 | Pro (monthly) | $29/mo | 30,000 / month |
 | Pro (annual) | $290/yr | 360,000 up front |
 
-Top-up packs (one-time, never expire): 10,000 / $7 · 30,000 / $18 · 100,000 / $55.
+Top-up packs (one-time, never expire): 5,000 / $7 · 15,000 / $18 · 50,000 / $55.
 
 Manage plans at <https://edgrapi.com/pricing>. Also available metered on RapidAPI.
 

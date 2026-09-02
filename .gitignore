@@ -13,3 +13,4 @@ build/
 .idea/
 .seen.json
 __pycache__/
+lhm.plugin.json

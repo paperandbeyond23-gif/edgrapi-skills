@@ -34,7 +34,7 @@ EDGAR is free but its XBRL company-facts payloads are brutal to parse (tag drift
 
 ## When to use this skill
 
-Each tool call spends one Edgrapi credit (1 credit = 1 request), so this skill activates only when the request is genuinely about a company's financials — not when a ticker merely appears in passing.
+Credits are weighted by endpoint rather than one per request, so this skill activates only when the request is genuinely about a company's financials — not when a ticker merely appears in passing.
 
 **DO use when the user:**
 
@@ -73,19 +73,22 @@ Set `EDGRAPI_KEY` to your Edgrapi key. Keys are `edgr_...` strings, sent as the 
 export EDGRAPI_KEY="edgr_..."
 ```
 
-Get a free key (100 free credits, no card required) at <https://edgrapi.com/app>.
+Get a free key (100 credits every month, no card required) at <https://edgrapi.com/app>.
 
 ## Pricing
 
-1 credit = 1 request. Credits never expire. All data is from public SEC EDGAR.
+Credits are weighted by endpoint, not one per request: company, filings, events, entity resolution
+and full-text search cost 1; fundamentals, ratios and XBRL cost 3; sections, insider, holdings and
+activist cost 5. Credits never expire. All data is from public SEC EDGAR.
 
 | Plan | Price | Credits |
 |---|---|---|
-| Free | $0 | 100 one-time |
-| Pro (monthly) | $29/mo | 60,000 / mo |
-| Pro (annual) | $290/yr | 720,000 up front |
+| Free | $0 | 100 / month |
+| Starter | $10/mo | 10,000 / month |
+| Pro (monthly) | $29/mo | 30,000 / month |
+| Pro (annual) | $290/yr | 360,000 up front |
 
-Top-up packs (one-time, never expire): 10,000 / $7 · 30,000 / $18 · 100,000 / $55.
+Top-up packs (one-time, never expire): 5,000 / $7 · 15,000 / $18 · 50,000 / $55.
 
 Manage plans at <https://edgrapi.com/pricing>. Also available metered on RapidAPI.
 
