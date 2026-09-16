@@ -1,10 +1,12 @@
 # edgrapi-skills
 
-**Agent skills for clean company financials from SEC EDGAR.** Drop-in skills that let any agent pull normalized income/balance/cash-flow fundamentals, computed ratios, company profiles, and recent SEC filings for any US-listed ticker — over the [Edgrapi REST API](https://edgrapi.com).
+**The US Government Data API for agents.** A hosted MCP server that serves official US government data as clean JSON on one key: SEC EDGAR filings (insider trades, 8-Ks, 13F holdings, 13D/G stakes, fundamentals, ratios), SAM.gov contract opportunities, USAspending awards, Grants.gov grants, and congressional stock trades — over the [Edgrapi API](https://edgrapi.com). Plus drop-in Python skills for the SEC financials workflow.
 
-EDGAR is free, but its XBRL company-facts payloads are brutal to parse (tag drift, mixed periods, trailing-twelve-month windows hiding inside 10-Qs). Edgrapi normalizes all of that into clean JSON, keyed by fiscal period — so your agent gets numbers it can trust in one call.
+Official data is free, but each source ships its own headache — XBRL tag drift, agency-specific query languages, pipe-delimited statuses, dollar ranges. Edgrapi normalizes all of it into one clean JSON schema, so your agent gets numbers it can trust in one call.
 
-Free to start — [grab a key](https://edgrapi.com/app) (100 free credits every month, no card required) and you're pulling fundamentals from Claude, ChatGPT, Cursor, or your own agent loop in under two minutes.
+Free to start — [grab a key](https://edgrapi.com/app) (100 free credits every month, no card required) and you're pulling data from Claude, ChatGPT, Cursor, or your own agent loop in under two minutes.
+
+> The hosted MCP server exposes the full toolset, including the government-data endpoints (`get_opportunities`, `get_awards`, `get_grants`, `get_congress`). The packaged Python `skills/` below cover the SEC company-financials workflow; use the MCP server for everything else.
 
 Pure Python standard library. No dependencies. MIT-0 licensed.
 
