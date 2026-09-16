@@ -1,12 +1,12 @@
 {
   "$schema": "https://static.modelcontextprotocol.io/schemas/2025-07-09/server.schema.json",
   "name": "io.github.paperandbeyond23-gif/edgrapi-skills",
-  "description": "US government data as clean JSON: federal contract opportunities (SAM.gov), awards and spending (USAspending), grant opportunities (Grants.gov), congressional stock trades, and SEC EDGAR filings. One key, MCP-native.",
+  "description": "US government + SEC data as clean JSON: SAM.gov, USAspending, Grants.gov, Congress, SEC filings.",
   "repository": {
     "url": "https://github.com/paperandbeyond23-gif/edgrapi-skills",
     "source": "github"
   },
-  "version": "1.2.0",
+  "version": "1.2.1",
   "websiteUrl": "https://edgrapi.com",
   "remotes": [
     {
