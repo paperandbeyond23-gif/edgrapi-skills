@@ -1,0 +1,47 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+    paths: ["npm/**", ".github/workflows/ci.yml"]
+  pull_request:
+    paths: ["npm/**"]
+  workflow_dispatch:
+
+jobs:
+  bridge:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v5
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+
+      # Speaks real MCP to the bridge against the live server.
+      - name: Smoke test
+        working-directory: npm
+        run: node test/smoke.js
+
+      - name: Check the npm tarball contents
+        working-directory: npm
+        run: npm pack --dry-run
+
+      # Build only, never pushed. Catches a broken Dockerfile here instead of
+      # halfway through a release.
+      - name: Build the image
+        uses: docker/build-push-action@v6
+        with:
+          context: npm
+          push: false
+          load: true
+          tags: edgrapi-mcp:ci
+
+      # The image must answer MCP on stdio. -i keeps stdin open, which is the
+      # thing most likely to break silently.
+      - name: Run the image and expect a tools/list answer
+        run: |
+          out=$(echo '{"jsonrpc":"2.0","id":1,"method":"tools/list"}' \
+            | docker run -i --rm edgrapi-mcp:ci)
+          echo "$out"
+          echo "$out" | grep -q get_opportunities
