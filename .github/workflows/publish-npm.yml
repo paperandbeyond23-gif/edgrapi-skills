@@ -1,0 +1,37 @@
+name: Publish edgrapi-mcp to npm
+
+# Its own tag prefix: `v*` already publishes server.json to the MCP registry,
+# and the npm bridge versions independently of that manifest.
+on:
+  push:
+    tags: ["npm-v*"]
+  workflow_dispatch:
+
+defaults:
+  run:
+    working-directory: npm
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      id-token: write # npm provenance
+
+    steps:
+      - uses: actions/checkout@v5
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+          registry-url: "https://registry.npmjs.org"
+
+      # Nothing to install — the bridge is dependency-free. This speaks real MCP
+      # to the live server, so a broken bridge never reaches npm.
+      - name: Smoke test
+        run: node test/smoke.js
+
+      - name: Publish
+        run: npm publish --provenance --access public
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}

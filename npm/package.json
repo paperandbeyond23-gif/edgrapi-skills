@@ -1,0 +1,55 @@
+{
+  "name": "edgrapi-mcp",
+  "version": "1.0.0",
+  "description": "US government data for AI agents as clean JSON: SAM.gov contract opportunities, USAspending awards, Grants.gov grants, congressional trades and SEC EDGAR filings. Stdio bridge to the hosted Edgrapi MCP server.",
+  "mcpName": "io.github.paperandbeyond23-gif/edgrapi-skills",
+  "bin": {
+    "edgrapi-mcp": "bin/edgrapi-mcp.js"
+  },
+  "files": [
+    "bin/",
+    "README.md",
+    "LICENSE"
+  ],
+  "engines": {
+    "node": ">=18"
+  },
+  "homepage": "https://edgrapi.com",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/paperandbeyond23-gif/edgrapi-skills.git",
+    "directory": "npm"
+  },
+  "bugs": {
+    "url": "https://github.com/paperandbeyond23-gif/edgrapi-skills/issues"
+  },
+  "author": "Paper and Beyond",
+  "license": "MIT",
+  "keywords": [
+    "mcp",
+    "modelcontextprotocol",
+    "mcp-server",
+    "model-context-protocol",
+    "government-data",
+    "sam-gov",
+    "usaspending",
+    "grants-gov",
+    "govcon",
+    "federal-contracts",
+    "congress-trading",
+    "sec-edgar",
+    "edgar",
+    "filings",
+    "13f",
+    "form-4",
+    "xbrl",
+    "financial-data",
+    "ai-agents",
+    "claude",
+    "cursor"
+  ],
+  "dependencies": {},
+  "scripts": {
+    "test": "node test/smoke.js"
+  }
+}
