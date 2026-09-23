@@ -10,20 +10,20 @@
   "websiteUrl": "https://edgrapi.com",
   "packages": [
     {
-      "registry_type": "oci",
-      "registry_base_url": "https://ghcr.io",
+      "registryType": "oci",
+      "registryBaseUrl": "https://ghcr.io",
       "identifier": "paperandbeyond23-gif/edgrapi-mcp",
       "version": "1.0.0",
-      "runtime_hint": "docker",
+      "runtimeHint": "docker",
       "transport": {
         "type": "stdio"
       },
-      "environment_variables": [
+      "environmentVariables": [
         {
           "name": "EDGRAPI_API_KEY",
           "description": "Edgrapi API key, looks like edgr_... Free tier is 100 credits a month with no card: https://edgrapi.com/app",
-          "is_required": true,
-          "is_secret": true
+          "isRequired": true,
+          "isSecret": true
         }
       ]
     }
