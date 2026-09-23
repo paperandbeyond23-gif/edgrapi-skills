@@ -4,6 +4,11 @@ on:
   push:
     tags: ["npm-v*"]
   workflow_dispatch:
+    inputs:
+      version:
+        description: "Version to tag the image with, e.g. 1.0.0. The MCP registry pins an exact version, so 'latest' alone is not enough."
+        required: true
+        default: "1.0.0"
 
 jobs:
   publish:
@@ -36,6 +41,7 @@ jobs:
           images: ghcr.io/${{ github.repository_owner }}/edgrapi-mcp
           tags: |
             type=match,pattern=npm-v(.*),group=1
+            type=raw,value=${{ inputs.version }},enable=${{ github.event_name == 'workflow_dispatch' }}
             type=raw,value=latest
 
       - name: Build and push
