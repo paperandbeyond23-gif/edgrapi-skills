@@ -21,10 +21,14 @@ jobs:
     steps:
       - uses: actions/checkout@v5
 
+      # Node 24, not 22: trusted publishing needs npm >= 11.5.1, and Node 22 still
+      # ships npm 10.x. This works the same for token publishing, so the workflow
+      # is ready the day we switch to OIDC and drop NPM_TOKEN.
       - uses: actions/setup-node@v4
         with:
-          node-version: "22"
+          node-version: "24"
           registry-url: "https://registry.npmjs.org"
+          package-manager-cache: false # never cache in a release build
 
       # Nothing to install — the bridge is dependency-free. This speaks real MCP
       # to the live server, so a broken bridge never reaches npm.
