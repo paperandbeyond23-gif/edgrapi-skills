@@ -9,6 +9,10 @@
 
 FROM node:22-alpine
 
+# The MCP registry checks this label to confirm we own the server name it is
+# being published under. Without it, publishing the oci package entry is rejected.
+LABEL io.modelcontextprotocol.server.name="io.github.paperandbeyond23-gif/edgrapi-skills"
+
 LABEL org.opencontainers.image.title="Edgrapi MCP"
 LABEL org.opencontainers.image.description="US government data for AI agents as clean JSON: SAM.gov contract opportunities, USAspending awards, Grants.gov grants, congressional trades and SEC EDGAR filings."
 LABEL org.opencontainers.image.url="https://edgrapi.com"
