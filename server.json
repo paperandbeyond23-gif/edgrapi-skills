@@ -12,7 +12,6 @@
     {
       "registryType": "oci",
       "identifier": "ghcr.io/paperandbeyond23-gif/edgrapi-mcp:1.0.0",
-      "version": "1.0.0",
       "runtimeHint": "docker",
       "transport": {
         "type": "stdio"
