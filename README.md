@@ -71,14 +71,14 @@ the server, so neither goes stale.
 
 ## Skills in this repo
 
-The packaged Python skills cover the SEC company-financials workflow. Use the MCP server for the
-government-data tools.
+Drop-in Python, pure standard library. Install all of them or just the one you need.
 
-| Skill | Purpose |
-|---|---|
-| [`edgrapi-full`](skills/edgrapi-full) | Fundamentals, ratios, company profile and filings |
-| [`edgrapi-fundamentals`](skills/edgrapi-fundamentals) | Normalised financial statements + computed ratios |
-| [`edgrapi-filings`](skills/edgrapi-filings) | Company profiles + recent 10-K/10-Q/8-K |
+| Skill | Tools | Purpose |
+|---|---|---|
+| [`edgrapi-full`](skills/edgrapi-full) | 9 | Everything below in one skill, across all five sources |
+| [`edgrapi-gov`](skills/edgrapi-gov) | 5 | SAM.gov opportunities, USAspending awards, Grants.gov, congressional trades |
+| [`edgrapi-fundamentals`](skills/edgrapi-fundamentals) | 2 | Normalised financial statements + computed ratios |
+| [`edgrapi-filings`](skills/edgrapi-filings) | 2 | Company profiles + recent 10-K/10-Q/8-K |
 
 ## Authentication
 

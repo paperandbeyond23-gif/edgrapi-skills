@@ -92,13 +92,13 @@ class TestEndpoints(unittest.TestCase):
 
 class TestHttpErrors(unittest.TestCase):
     @patch("handler.urllib.request.urlopen")
-    def test_404_maps_to_ticker_not_found(self, mock_urlopen):
+    def test_404_maps_to_not_found(self, mock_urlopen):
         mock_urlopen.side_effect = urllib.error.HTTPError(
             "https://edgrapi.com/v1/company/ZZZZ", 404, "Not Found", None, None
         )
         with patch.dict(os.environ, {"EDGRAPI_KEY": "edgr_test"}):
             result = handler.get_company(ticker="ZZZZ")
-        self.assertEqual(result["error"], "ticker_not_found")
+        self.assertEqual(result["error"], "not_found")
 
     @patch("handler.urllib.request.urlopen")
     def test_429_maps_to_rate_limit(self, mock_urlopen):
@@ -118,6 +118,58 @@ class TestHttpErrors(unittest.TestCase):
         with patch.dict(os.environ, {"EDGRAPI_KEY": "edgr_bad"}):
             result = handler.get_ratios(ticker="AAPL")
         self.assertEqual(result["error"], "auth_invalid")
+
+
+class TestGovernmentTools(unittest.TestCase):
+    """The government half of edgrapi-full: SAM.gov, USAspending, Grants.gov, Congress."""
+
+    def setUp(self):
+        self.env = patch.dict(os.environ, {"EDGRAPI_KEY": "edgr_test"})
+        self.env.start()
+
+    def tearDown(self):
+        self.env.stop()
+
+    def test_opportunities_routes_and_passes_naics(self):
+        with patch("urllib.request.urlopen", return_value=_mock_response(b"{}")) as m:
+            handler.get_opportunities(naics="541511", ptype="o")
+        url = _req(m).full_url
+        self.assertIn("/v1/opportunities", url)
+        self.assertIn("naics=541511", url)
+
+    def test_awards_routes(self):
+        with patch("urllib.request.urlopen", return_value=_mock_response(b"{}")) as m:
+            handler.get_awards(recipient="Lockheed")
+        self.assertIn("/v1/awards", _req(m).full_url)
+
+    def test_grants_routes(self):
+        with patch("urllib.request.urlopen", return_value=_mock_response(b"{}")) as m:
+            handler.get_grants(aln="93.217")
+        self.assertIn("/v1/grants", _req(m).full_url)
+
+    def test_congress_routes(self):
+        with patch("urllib.request.urlopen", return_value=_mock_response(b"{}")) as m:
+            handler.get_congress(action="buy")
+        self.assertIn("/v1/congress", _req(m).full_url)
+
+    def test_congress_ticker_routes_uppercased(self):
+        with patch("urllib.request.urlopen", return_value=_mock_response(b"{}")) as m:
+            handler.get_congress_ticker(" nvda ")
+        self.assertIn("/v1/congress/NVDA", _req(m).full_url)
+
+    def test_invalid_values_rejected_without_network(self):
+        with patch("urllib.request.urlopen") as m:
+            self.assertEqual(handler.get_opportunities(ptype="x")["error"], "invalid_argument")
+            self.assertEqual(handler.get_awards(category="widgets")["error"], "invalid_argument")
+            self.assertEqual(handler.get_congress(action="hold")["error"], "invalid_argument")
+        m.assert_not_called()
+
+    def test_gov_5xx_does_not_blame_edgar_alone(self):
+        err = urllib.error.HTTPError("https://edgrapi.com/v1/grants", 503, "e", {}, None)
+        with patch("urllib.request.urlopen", side_effect=err):
+            r = handler.get_grants()
+        self.assertEqual(r["error"], "source_unavailable")
+        self.assertIn("SAM.gov", r["detail"])
 
 
 if __name__ == "__main__":

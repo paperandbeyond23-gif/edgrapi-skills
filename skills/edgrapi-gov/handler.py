@@ -1,12 +1,10 @@
 """
-edgrapi-full skill handler — all five US government sources over the Edgrapi REST
-API.
-
-SEC EDGAR:  get_fundamentals, get_ratios, get_company, get_filings
-Government: get_opportunities (SAM.gov), get_awards (USAspending),
-            get_grants (Grants.gov), get_congress, get_congress_ticker
+edgrapi-gov skill handler — US federal procurement, spending, grants and
+congressional trading over the Edgrapi REST API: get_opportunities, get_awards,
+get_grants, get_congress, get_congress_ticker.
 
 Pure standard library. API key in EDGRAPI_KEY, sent as the X-API-Key header.
+Every endpoint here costs 2 credits per call.
 """
 
 import json
@@ -23,7 +21,6 @@ SIGNUP_URL = "https://edgrapi.com/app"
 KEYS_URL = "https://edgrapi.com/app"
 PRICING_URL = "https://edgrapi.com/pricing"
 
-PERIODS = ("annual", "quarterly")
 AWARD_CATEGORIES = ("contracts", "idvs", "grants", "loans", "direct_payments", "other")
 PTYPES = ("o", "p", "a")
 ACTIONS = ("buy", "sell")
@@ -52,6 +49,13 @@ def _http_error(e):
             "keys_url": KEYS_URL,
             "http_status": 401,
         }
+    if e.code == 402:
+        return {
+            "error": "out_of_credits",
+            "detail": "Out of Edgrapi credits. Top up a pack or subscribe at " + PRICING_URL + ".",
+            "upgrade_url": PRICING_URL,
+            "http_status": 402,
+        }
     if e.code == 403:
         return {
             "error": "rapidapi_only",
@@ -64,18 +68,14 @@ def _http_error(e):
     if e.code == 404:
         return {
             "error": "not_found",
-            "detail": (
-                "No record matched. For SEC tools use the exact listed symbol "
-                "(e.g. AAPL, BRK-B); for government tools check the filter values."
-            ),
+            "detail": "No record matched. Check the ticker or filter values.",
             "http_status": 404,
         }
-    if e.code == 402:
+    if e.code == 422:
         return {
-            "error": "out_of_credits",
-            "detail": "Out of Edgrapi credits. Top up a pack or subscribe at " + PRICING_URL + ".",
-            "upgrade_url": PRICING_URL,
-            "http_status": 402,
+            "error": "invalid_argument",
+            "detail": "A filter value was rejected upstream. " + detail,
+            "http_status": 422,
         }
     if e.code == 429:
         return {
@@ -88,8 +88,8 @@ def _http_error(e):
         return {
             "error": "source_unavailable",
             "detail": (
-                "The upstream source (SEC EDGAR, SAM.gov, USAspending, Grants.gov or the "
-                "House clerk) was unreachable. Retry shortly."
+                "The upstream government source (SAM.gov, USAspending, Grants.gov or "
+                "the House clerk) was unreachable. Retry shortly."
             ),
             "http_status": e.code,
         }
@@ -123,59 +123,6 @@ def _get(path, params=None):
         return {"error": "auth_required", "detail": str(e), "signup_url": SIGNUP_URL}
     except Exception as e:
         return {"error": "unexpected", "detail": str(e)}
-
-
-def _ticker(t):
-    return urllib.parse.quote((t or "").strip().upper(), safe="")
-
-
-def get_fundamentals(ticker, period="annual", limit=5):
-    """
-    Normalized income-statement, balance-sheet, and cash-flow figures for `ticker`,
-    parsed from SEC EDGAR XBRL companyfacts.
-
-    period: "annual" (10-K) or "quarterly" (10-Q), default "annual".
-    limit:  number of periods to return, 1-20 (default 5).
-    Returns a dict with periodized statements, or an {"error": ...} dict.
-    """
-    if not ticker:
-        return {"error": "invalid_argument", "detail": "ticker is required."}
-    if period not in PERIODS:
-        return {"error": "invalid_argument", "detail": "period must be 'annual' or 'quarterly'."}
-    return _get("/v1/fundamentals/" + _ticker(ticker), {"period": period, "limit": limit})
-
-
-def get_ratios(ticker):
-    """
-    Computed financial ratios for `ticker` (margins, returns, leverage, liquidity)
-    derived from SEC EDGAR fundamentals. Price-based ratios (P/E, P/B) are not
-    included — EDGAR carries no market price.
-    """
-    if not ticker:
-        return {"error": "invalid_argument", "detail": "ticker is required."}
-    return _get("/v1/ratios/" + _ticker(ticker))
-
-
-def get_company(ticker):
-    """
-    Company profile for `ticker`: CIK, legal name, SIC industry, fiscal-year end,
-    exchanges, and website, resolved from SEC EDGAR submissions.
-    """
-    if not ticker:
-        return {"error": "invalid_argument", "detail": "ticker is required."}
-    return _get("/v1/company/" + _ticker(ticker))
-
-
-def get_filings(ticker, limit=20, form=None):
-    """
-    Recent SEC filings for `ticker` with filing/report dates and document links.
-
-    limit: number of filings to return, 1-100 (default 20).
-    form:  optional filter by form type, e.g. "10-K", "10-Q", "8-K".
-    """
-    if not ticker:
-        return {"error": "invalid_argument", "detail": "ticker is required."}
-    return _get("/v1/filings/" + _ticker(ticker), {"limit": limit, "form": form})
 
 
 def get_opportunities(posted_from=None, posted_to=None, limit=20, offset=0,
